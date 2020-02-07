@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Book from './Book'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import PropTypes from 'prop-types'
 
 
 class SearchBooks extends Component {
@@ -16,10 +17,8 @@ class SearchBooks extends Component {
       query: query.trim()
     }));
     if (query.length > 0) {
-      console.log('about to call API')
       BooksAPI.search(query.trim()).then(books => {
         if (books.length > 0) {
-          console.log(books);
           this.setState(prevState => ({
             searchBooks : books
           }));
@@ -66,8 +65,8 @@ class SearchBooks extends Component {
             <div className="search-books-results">
               <ol className="books-grid">
               {
-                  // use id to see if book exists in my library, if so set shelf
                   this.state.searchBooks.map((book) => {
+                    // use id to see if book exists in my library, if so set shelf
                     book.shelf = this.props.getCurrentShelf(book.id);
                     return (<Book key={book.id} book={book} onChangeShelf={this.props.onChangeShelf}/>)
                   })
@@ -78,4 +77,11 @@ class SearchBooks extends Component {
     )
   }
 }
+
+SearchBooks.propTypes = {
+  books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired,
+  getCurrentShelf: PropTypes.func.isRequired
+}
+
 export default SearchBooks;

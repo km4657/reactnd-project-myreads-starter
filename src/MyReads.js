@@ -1,61 +1,28 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import Book from './Book'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Shelf from './Shelf';
+import PropTypes from 'prop-types';
 
 
 class MyReads extends Component {
-  state = {
-    // not sure
-  };
-
- 
+  
   render() {
-    const { books, onChangeShelf } = this.props;
-    const currentlyReading = books.filter(b => (
-      b.shelf === 'currentlyReading'))
-    const wantToRead = books.filter(b => (
-        b.shelf === 'wantToRead'))
-    const read = books.filter(b => (
-          b.shelf === 'read'))
+    const shelves= [
+      {'id': 1, 'shelfName' :'currentlyReading', 'shelfHeading': 'Currently Reading'},
+      {'id': 1, 'shelfName' :'wantToRead', 'shelfHeading': 'Want To Read'},
+      {'id': 1, 'shelfName' :'read', 'shelfHeading': 'Read'}
+    ]
+
     return (
-        <div className="list-books">
+      <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
-        <div className="list-books-content">
-          <div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                {currentlyReading.map((book) => (
-                <Book key={book.id} book={book} onChangeShelf={onChangeShelf} />
-              ))} 
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                {wantToRead.map((book) => (
-                <Book key={book.id} book={book} onChangeShelf={onChangeShelf} />
-              ))}
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                {read.map((book) => (
-                <Book key={book.id} book={book} onChangeShelf={onChangeShelf} />
-              ))}
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ol className="list-books-content">
+          {shelves.map((shelf) => (
+          <Shelf key={shelf.id} books={this.props.books} onChangeShelf={this.props.onChangeShelf} shelf={shelf} />
+          ))}
+        </ol>
         <div>
             <Link className="open-search" to='/search'>
             </Link> 
@@ -64,4 +31,9 @@ class MyReads extends Component {
     )
   }
 }
+MyReads.propTypes = {
+  books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired,
+}
+
 export default MyReads;
