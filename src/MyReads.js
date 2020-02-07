@@ -57,7 +57,8 @@ class MyReads extends Component {
           </div>
         </div>
         <div>
-            <Link className="open-search" to='/search'>Add a book</Link> 
+            <Link className="open-search" to='/search'>
+            </Link> 
         </div>
       </div>
     )
