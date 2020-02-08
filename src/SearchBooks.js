@@ -14,25 +14,34 @@ class SearchBooks extends Component {
   updateQuery = (query) => {
     console.log(`query: ${query}`)
     this.setState(prevState => ({
-      query: query.trim()
+      query: query
     }));
     if (query.length > 0) {
-      BooksAPI.search(query.trim()).then(books => {
+      BooksAPI.search(query).then(books => {
         if (books.length > 0) {
           this.setState(prevState => ({
             searchBooks : books
           }));
         }
+        else {
+          this.setState(prevState => ({
+            searchBooks : []
+          }));
+        }
+      }, () => {
+        this.setState(prevState => ({
+          searchBooks : []
+        }));
       }
     );
   }
-   
-  }
-
-  componentDidMount() {
+  else
+  {
     this.setState(prevState => ({
-      searchBooks : this.props.books
+      searchBooks : []
     }));
+  }
+   
   }
     
   resetQuery = () =>{

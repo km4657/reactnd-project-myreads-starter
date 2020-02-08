@@ -9,8 +9,8 @@ class MyReads extends Component {
   render() {
     const shelves= [
       {'id': 1, 'shelfName' :'currentlyReading', 'shelfHeading': 'Currently Reading'},
-      {'id': 1, 'shelfName' :'wantToRead', 'shelfHeading': 'Want To Read'},
-      {'id': 1, 'shelfName' :'read', 'shelfHeading': 'Read'}
+      {'id': 2, 'shelfName' :'wantToRead', 'shelfHeading': 'Want To Read'},
+      {'id': 3, 'shelfName' :'read', 'shelfHeading': 'Read'}
     ]
 
     return (

@@ -3,8 +3,14 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 import MyReads from './MyReads';
 import SearchBooks from './SearchBooks';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
+// code from tylermcginnis.com (https://tylermcginnis.com/react-router-handling-404-pages/)
+const NoMatch = ({ location }) => (
+  <div>
+    <h3>No match for {location.pathname}</h3>
+  </div>
+)
 
 class BooksApp extends Component {
   state = {
@@ -36,17 +42,20 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-      <Route exact path='/search' render={() => (
-          <SearchBooks 
+      <Switch>
+        <Route exact path='/search' render={() => (
+            <SearchBooks 
+              books={this.state.books}
+              onChangeShelf={this.updateBooks}
+              getCurrentShelf={this.getCurrentShelf} 
+        />)}/>
+        <Route exact path='/' render={() => (
+            <MyReads
             books={this.state.books}
             onChangeShelf={this.updateBooks}
-            getCurrentShelf={this.getCurrentShelf} 
-      />)}/>
-      <Route exact path='/' render={() => (
-          <MyReads
-          books={this.state.books}
-          onChangeShelf={this.updateBooks}
-      />)}/>
+        />)}/>
+        <Route component={NoMatch} />
+      </Switch>
       </div>
     )
   }
